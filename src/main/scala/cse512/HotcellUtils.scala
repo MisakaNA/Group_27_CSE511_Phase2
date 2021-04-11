@@ -48,4 +48,8 @@ object HotcellUtils {
   }
 
   // YOU NEED TO CHANGE THIS PART
+  def cellBoundaryChecker(x:Double, y:Double, z:Int): Boolean = {
+    if()
+    true
+  }
 }

@@ -43,6 +43,25 @@ def runHotcellAnalysis(spark: SparkSession, pointPath: String): DataFrame =
   val numCells = (maxX - minX + 1)*(maxY - minY + 1)*(maxZ - minZ + 1)
 
   // YOU NEED TO CHANGE THIS PART
+  pickupInfo.createOrReplaceTempView("pickupView")
+
+  val filterCellDf = spark.sql("SELECT * FROM  tempView WHERE x >= $minX AND x <= $maxX " +
+    "AND y >= $minY AND y <= $maxY AND z >= $minZ AND z <= $maxZ")
+  filterCellDf.createOrReplaceTempView("filterView")
+
+  val countDf = spark.sql("SELECT COUNT(*) AS pointNum FROM filterView GROUP BY x, y, z")
+  countDf.createOrReplaceTempView("countView")
+
+  val sumDf = spark.sql("SELECT SUM(pointNum) FROM countView")
+  sumDf.createOrReplaceTempView("sumView")
+
+  val squareSumDf = spark.sql("SELECT SUM(SQUARE(pointNum)) FROM countView")
+  squareSumDf.createOrReplaceTempView("squareSumView")
+
+  val avgX = sumDf.first().getInt(0) / numCells
+  var S = math.sqrt(squareSumDf.first().getInt(0) / numCells - math.pow(avgX, 2.0))
+
+
 
   return pickupInfo // YOU NEED TO CHANGE THIS PART
 }
