@@ -1,7 +1,6 @@
 package cse512
 
 object HotzoneUtils {
-
   def ST_Contains(queryRectangle: String, pointString: String ): Boolean = {
     var valueArray = pointString.split(',')
     val pointX = valueArray(0).asInstanceOf[Double]
