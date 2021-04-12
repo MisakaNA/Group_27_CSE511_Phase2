@@ -39,7 +39,7 @@ object Entrance extends App {
         currentQueryIdx = currentQueryIdx + 1
       }
       else {
-        // Keep appending query parameters
+        // Keep appending query parameters ???? DUDEEEE
         currentQueryParams = currentQueryParams + args(paramOffset) + " "
       }
       paramOffset = paramOffset + 1
