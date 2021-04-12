@@ -48,8 +48,29 @@ object HotcellUtils {
   }
 
   // YOU NEED TO CHANGE THIS PART
-  def cellBoundaryChecker(x:Double, y:Double, z:Int): Boolean = {
-    if()
-    true
+  def getNeighbors(x: Int, y: Int, z: Int, minX: Int, maxX: Int, minY: Int, maxY: Int, minZ: Int, maxZ: Int): Int = {
+
+    val neighborMap = Map(0 -> 26, 1 -> 17, 2 -> 11, 3 -> 7)
+
+    var conditionTracker = 0
+
+    if(x == minX || x == maxX) {
+      conditionTracker += 1
+    }
+    if(y == minY || y == maxY) {
+      conditionTracker += 1
+    }
+    if(z == minZ || z == maxZ) {
+      conditionTracker += 1
+    }
+
+    neighborMap(conditionTracker)
+  }
+
+  def getGScore(avgX: Double, S: Double, sigma_WijXj: Double, sigma_Wij: Double, numCells: Double): Double = {
+    val numerator = sigma_WijXj - avgX * sigma_Wij
+    val denominator = S * math.sqrt(((numCells * sigma_Wij) - math.pow(sigma_Wij, 2.0)) / (numCells - 1.0))
+
+    numerator / denominator
   }
 }
