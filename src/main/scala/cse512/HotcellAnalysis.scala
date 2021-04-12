@@ -83,7 +83,8 @@ object HotcellAnalysis {
       HotcellUtils.getGScore(avgX: Double, S: Double, sigma_WijXj: Double, sigma_Wij: Double, numCells: Double))
 
     val GScoreDf = spark.sql(s"""
-                            SELECT x, y, z, G_Score($avgX, $S, sigma_WijXj, sigma_Wij, $numCells) AS G
+                            SELECT x, y, z,
+                                   G_Score($avgX, $S, sigma_WijXj, sigma_Wij, $numCells) AS G
                             FROM neighborView
                             ORDER BY G DESC""")
     GScoreDf.createOrReplaceTempView("GScoreView")
