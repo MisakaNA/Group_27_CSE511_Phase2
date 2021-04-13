@@ -3,14 +3,14 @@ package cse512
 object HotzoneUtils {
   def ST_Contains(queryRectangle: String, pointString: String ): Boolean = {
     var valueArray = pointString.split(',')
-    val pointX = valueArray(0).asInstanceOf[Double]
-    val pointY = valueArray(1).asInstanceOf[Double]
+    val pointX = valueArray(0).toDouble
+    val pointY = valueArray(1).toDouble
 
     valueArray = queryRectangle.split(',')
-    val rectX1 = valueArray(0).asInstanceOf[Double]
-    val rectY1 = valueArray(1).asInstanceOf[Double]
-    val rectX2 = valueArray(2).asInstanceOf[Double]
-    val rectY2 = valueArray(3).asInstanceOf[Double]
+    val rectX1 = math.min(valueArray(0).toDouble, valueArray(2).toDouble)
+    val rectY1 = math.min(valueArray(1).toDouble, valueArray(3).toDouble)
+    val rectX2 = math.max(valueArray(0).toDouble, valueArray(2).toDouble)
+    val rectY2 = math.max(valueArray(1).toDouble, valueArray(3).toDouble)
 
     pointX >= rectX1 && pointX <= rectX2 && pointY >= rectY1 && pointY <= rectY2
   }
