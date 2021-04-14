@@ -69,7 +69,6 @@ object HotcellUtils {
 
   def getGScore(avgX: Double, S: Double, sigma_WijXj: Double, sigma_Wij: Double, numCells: Double): Double = {
     val numerator = sigma_WijXj - avgX * sigma_Wij
-    print(sigma_Wij)
     val denominator = S * math.sqrt(((numCells * sigma_Wij) - math.pow(sigma_Wij, 2.0)) / (numCells - 1.0))
 
     numerator / denominator

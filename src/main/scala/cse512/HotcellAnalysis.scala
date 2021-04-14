@@ -46,7 +46,7 @@ object HotcellAnalysis {
 
     val filterCellDf = spark.sql(s"""
                                 SELECT *
-                                FROM  tempView
+                                FROM  pickupView
                                 WHERE x >= $minX AND x <= $maxX
                                   AND y >= $minY AND y <= $maxY
                                   AND z >= $minZ AND z <= $maxZ""")
@@ -58,11 +58,11 @@ object HotcellAnalysis {
     val sumDf = spark.sql("SELECT SUM(pointNum) FROM countView")
     sumDf.createOrReplaceTempView("sumView")
 
-    val squareSumDf = spark.sql("SELECT SUM(SQUARE(pointNum)) FROM countView")
+    val squareSumDf = spark.sql("SELECT SUM(POW(pointNum, 2)) FROM countView")
     squareSumDf.createOrReplaceTempView("squareSumView")
 
-    val avgX = sumDf.first().getDouble(0) / numCells
-    var S = math.sqrt(squareSumDf.first().getDouble(0) / numCells - math.pow(avgX, 2.0))
+    val avgX = sumDf.first().getLong(0) / numCells
+    val S = math.sqrt(squareSumDf.first().getDouble(0) / numCells - math.pow(avgX, 2.0))
 
     spark.udf.register("sumSpatialWeight", (x: Int, y: Int, z: Int, minX: Int, maxX: Int, minY: Int, maxY: Int, minZ: Int, maxZ: Int) =>
       HotcellUtils.getNeighbors(x: Int, y: Int, z: Int, minX: Int, maxX: Int, minY: Int, maxY: Int, minZ: Int, maxZ: Int))
