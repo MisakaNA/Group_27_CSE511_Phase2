@@ -50,7 +50,7 @@ object HotcellUtils {
   // YOU NEED TO CHANGE THIS PART
   def getNeighbors(x: Int, y: Int, z: Int, minX: Int, maxX: Int, minY: Int, maxY: Int, minZ: Int, maxZ: Int): Int = {
 
-    val neighborMap = Map(0 -> 26, 1 -> 17, 2 -> 11, 3 -> 7)
+    val neighborMap = Array(26, 17, 11, 7)
 
     var conditionTracker = 0
 
