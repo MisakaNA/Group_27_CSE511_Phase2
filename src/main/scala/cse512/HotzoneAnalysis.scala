@@ -34,7 +34,6 @@ object HotzoneAnalysis {
 
     val sortRectangle = spark.sql("SELECT * FROM countResult ORDER BY rectangle")
     sortRectangle.createOrReplaceTempView("sortResult")
-    print(sortRectangle)
 
     sortRectangle // YOU NEED TO CHANGE THIS PART
   }

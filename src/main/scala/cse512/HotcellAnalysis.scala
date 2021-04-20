@@ -61,7 +61,7 @@ object HotcellAnalysis {
     val squareSumDf = spark.sql("SELECT SUM(POW(pointNum, 2)) FROM countView")
     squareSumDf.createOrReplaceTempView("squareSumView")
 
-    val avgX = sumDf.first().getLong(0) / numCells
+    val avgX = sumDf.first().getLong(0).toDouble / numCells
     val S = math.sqrt(squareSumDf.first().getDouble(0) / numCells - math.pow(avgX, 2.0))
 
     spark.udf.register("sumSpatialWeight", (x: Int, y: Int, z: Int, minX: Int, maxX: Int, minY: Int, maxY: Int, minZ: Int, maxZ: Int) =>
